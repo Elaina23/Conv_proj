@@ -1,0 +1,32 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include <Servo.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+int irPin = 2;
+int count = 0;
+int servopin = 13;
+Servo Servo1;
+
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(irPin,INPUT);
+  lcd.init();
+  lcd.backlight();
+  Servo1.attach(servopin);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  Servo1.write(0);
+  
+  if(digitalRead(irPin) == LOW) {
+    count++;
+  }
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Object count: ");
+  lcd.print(count);
+  delay(1000);
+}
